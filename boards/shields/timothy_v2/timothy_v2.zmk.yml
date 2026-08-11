@@ -1,0 +1,16 @@
+file_format: "1"
+id: timothy_v2
+name: Timothy_v2
+type: shield
+url: https://github.com/geek-rabb1t/zmk-config
+
+features:
+  - keys
+  - studio
+
+requires:
+  - seeed_xiao
+
+siblings:
+  - timothy_v2_left
+  - timothy_v2_right
