@@ -13,3 +13,9 @@ include:
     artifact-name: timothy_v2_left_studio
   - board: seeeduino_xiao_ble
     shield: settings_reset
+  # デバッグ用: USB シリアルにログを出す (電池残量の調査用)
+  - board: seeeduino_xiao_ble
+    shield: timothy_v2_left
+    snippet: zmk-usb-logging
+    cmake-args: -DCONFIG_SENSOR_LOG_LEVEL_DBG=y
+    artifact-name: timothy_v2_left_debug
