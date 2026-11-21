@@ -1,5 +1,5 @@
 /*
- * 単4アルカリ乾電池を ADC ピンに直接つないで残量を測るドライバ。
+ * 単4アルカリ乾電池の電圧を分圧抵抗経由で ADC ピンに入力して残量を測るドライバ。
  * ZMK 標準の zmk,battery-voltage-divider はリチウムイオン用の残量計算しか
  * 持たないため、アルカリ乾電池の放電カーブで % を計算する。
  *
@@ -20,6 +20,8 @@ LOG_MODULE_REGISTER(battery_alkaline, CONFIG_SENSOR_LOG_LEVEL);
 struct alk_config {
     uint8_t channel;
     uint8_t cells;
+    uint32_t output_ohm;
+    uint32_t full_ohm;
 };
 
 struct alk_data {
@@ -81,9 +83,13 @@ static int alk_sample_fetch(const struct device *dev, enum sensor_channel chan) 
     int32_t mv = MAX(data->adc_raw, 0);
     adc_raw_to_millivolts(adc_ref_internal(data->adc), data->acc.gain, data->as.resolution, &mv);
 
-    data->millivolts = mv;
-    data->state_of_charge = alkaline_mv_to_pct(mv / cfg->cells);
-    LOG_DBG("ADC raw %d => %d mV => %d%%", data->adc_raw, mv, data->state_of_charge);
+    /* 分圧前の電池電圧に戻す */
+    uint32_t bat_mv = (uint64_t)mv * cfg->full_ohm / cfg->output_ohm;
+
+    data->millivolts = bat_mv;
+    data->state_of_charge = alkaline_mv_to_pct(bat_mv / cfg->cells);
+    LOG_DBG("ADC raw %d ~ %d mV => battery %u mV => %d%%", data->adc_raw, mv, bat_mv,
+            data->state_of_charge);
 
     return 0;
 }
@@ -149,6 +155,8 @@ static int alk_init(const struct device *dev) {
     static const struct alk_config alk_config_##n = {                                              \
         .channel = DT_INST_IO_CHANNELS_INPUT(n),                                                   \
         .cells = DT_INST_PROP(n, cells),                                                           \
+        .output_ohm = DT_INST_PROP(n, output_ohms),                                                \
+        .full_ohm = DT_INST_PROP_OR(n, full_ohms, DT_INST_PROP(n, output_ohms)),                   \
     };                                                                                             \
     DEVICE_DT_INST_DEFINE(n, alk_init, NULL, &alk_data_##n, &alk_config_##n, POST_KERNEL,          \
                           CONFIG_SENSOR_INIT_PRIORITY, &alk_api);

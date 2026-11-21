@@ -1,16 +1,16 @@
 description: |
-  Alkaline cell(s) connected directly (no divider) to an nRF52 SAADC input.
+  Alkaline cell(s) measured through a resistor divider on an nRF52 SAADC input.
   State of charge is derived from an alkaline discharge curve.
+
+  Battery+ --[R1]--+-- ADC pin --[R2]-- GND
+    output-ohms = R2, full-ohms = R1 + R2
 
 compatible: "timothy,battery-alkaline"
 
-properties:
-  io-channels:
-    type: phandle-array
-    required: true
-    description: ADC channel (AINx) the battery is connected to.
+include: voltage-divider.yaml
 
+properties:
   cells:
     type: int
     default: 1
-    description: Number of cells in series. Voltage at the pin must stay below VDD.
+    description: Number of cells in series.

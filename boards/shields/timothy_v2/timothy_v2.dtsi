@@ -8,10 +8,13 @@
         zmk,battery = &aaa_battery;
     };
 
-    // 単4アルカリ乾電池 1 本の電圧を D0 (P0.02 = AIN0) に直接入力して残量を測る。
+    // 単4アルカリ乾電池 1 本の電圧を 1MΩ + 1MΩ で半分に分圧して D0 (P0.02 = AIN0) に入力し、残量を測る。
+    //   電池+ --[1MΩ]--+-- D0 --[1MΩ]-- GND
     aaa_battery: aaa_battery {
         compatible = "timothy,battery-alkaline";
         io-channels = <&adc 0>;
+        output-ohms = <1000000>;            // D0 - GND 間の抵抗
+        full-ohms = <(1000000 + 1000000)>;  // 分圧抵抗の合計
         cells = <1>;
     };
 
