@@ -1,0 +1,16 @@
+description: |
+  Alkaline cell(s) connected directly (no divider) to an nRF52 SAADC input.
+  State of charge is derived from an alkaline discharge curve.
+
+compatible: "timothy,battery-alkaline"
+
+properties:
+  io-channels:
+    type: phandle-array
+    required: true
+    description: ADC channel (AINx) the battery is connected to.
+
+  cells:
+    type: int
+    default: 1
+    description: Number of cells in series. Voltage at the pin must stay below VDD.

@@ -1,0 +1,1 @@
+add_subdirectory_ifdef(CONFIG_TIMOTHY_BATTERY_ALKALINE drivers/sensor/battery_alkaline)

@@ -1,13 +1,15 @@
 #include "timothy_v2.dtsi"
 
+// NFC1 = P0.09, NFC2 = P0.10 (XIAO nRF52840 裏面パッド)。
+// GPIO として使うため Kconfig.defconfig で CONFIG_NFCT_PINS_AS_GPIOS=y を有効化している。
 &kscan {
     col-gpios
-        = <&xiao_d 0 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 1 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 2 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 3 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 4 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 5 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 6 GPIO_ACTIVE_HIGH>
+        = <&xiao_d 2 GPIO_ACTIVE_HIGH>  // col-0: D2
+        , <&xiao_d 3 GPIO_ACTIVE_HIGH>  // col-1: D3
+        , <&xiao_d 4 GPIO_ACTIVE_HIGH>  // col-2: D4
+        , <&xiao_d 5 GPIO_ACTIVE_HIGH>  // col-3: D5
+        , <&xiao_d 6 GPIO_ACTIVE_HIGH>  // col-4: D6
+        , <&gpio0 9  GPIO_ACTIVE_HIGH>  // col-5: NFC1 (P0.09)
+        , <&gpio0 10 GPIO_ACTIVE_HIGH>  // col-6: NFC2 (P0.10)
         ;
 };

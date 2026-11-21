@@ -5,6 +5,14 @@
 / {
     chosen {
         zmk,physical-layout = &default_layout;
+        zmk,battery = &aaa_battery;
+    };
+
+    // 単4アルカリ乾電池 1 本の電圧を D0 (P0.02 = AIN0) に直接入力して残量を測る。
+    aaa_battery: aaa_battery {
+        compatible = "timothy,battery-alkaline";
+        io-channels = <&adc 0>;
+        cells = <1>;
     };
 
     kscan: kscan {
@@ -13,10 +21,10 @@
         wakeup-source;
 
         row-gpios
-            = <&xiao_d 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 7  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            = <&xiao_d 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // row-0: D10
+            , <&xiao_d 7  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // row-1: D7
+            , <&xiao_d 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // row-2: D8
+            , <&xiao_d 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // row-3: D9
             ;
     };
 
@@ -32,4 +40,9 @@
             RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5) RC(3,6)    RC(3,7) RC(3,8) RC(3,9) RC(3,10) RC(3,11) RC(3,12) RC(3,13)
         >;
     };
+};
+
+// XIAO 内蔵のリチウムイオン用電圧測定 (P0.31) は使わないので無効化する。
+&vbatt {
+    status = "disabled";
 };

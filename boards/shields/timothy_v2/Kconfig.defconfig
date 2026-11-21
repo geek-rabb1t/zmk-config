@@ -14,3 +14,23 @@ config ZMK_SPLIT
     default y
 
 endif # SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT
+
+if SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT
+
+# マトリックスの col-5 / col-6 に NFC1 (P0.09) / NFC2 (P0.10) を使うため、
+# NFC 機能を無効化して通常の GPIO として扱う。
+config NFCT_PINS_AS_GPIOS
+    default y
+
+endif
+
+if SHIELD_TIMOTHY_V2_LEFT
+
+# 右手側 (ペリフェラル) の電池残量を取得し、PC にも通知する。
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
+    default y
+
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY
+    default y
+
+endif # SHIELD_TIMOTHY_V2_LEFT
