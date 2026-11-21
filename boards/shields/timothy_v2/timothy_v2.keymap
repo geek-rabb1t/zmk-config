@@ -22,15 +22,15 @@
 // |  ESC  |   Q   |   W   |   E   |   R   |   T   |       |   |       |   Y   |   U   |   I   |   O   |   P   |   -   |
 // |  TAB  |   A   |   S   |   D   |   F   |   G   |   F5  |   |   F2  |   H   |   J   |   K   |   L   |   ;   |   '   |
 // |  CTRL |   Z   |   X   |   C   |   V   |   B   |  DEL  |   |  F12  |   N   |   M   |   ,   |   .   |   /   |   \   |
-// |  SET  |  GUI  |  ALT  | SFT/L1|NUM/SPC|  NAV  |       |   |       |  NAV  |NUM/RET| SFT/L2|   [   |   ]   |  OFF  |
-// SET = 設定レイヤーの切替 (左の隠しキー), OFF = キーボードの電源オフ (右の隠しキー、どれかのキーを押すと起動)
+// |  SET  |  GUI  |  ALT  | SFT/L1|NUM/SPC|  NAV  |       |   |       |  NAV  |NUM/RET| SFT/L2|   [   |   ]   | SLEEP |
+// SET = 設定レイヤーの切替 (左の隠しキー), SLEEP = PC をスリープ (右の隠しキー)
 // SFT/L1 = tap LANG1 / hold LSHFT, SFT/L2 = tap LANG2 / hold RSHFT
 // NUM/SPC, NUM/RET = tap SPACE/RET / hold NUM layer
             bindings = <
     &kp ESC      &kp Q         &kp W         &kp E            &kp R          &kp T         &none            &none     &kp Y         &kp U        &kp I            &kp O      &kp P       &kp MINUS
     &kp TAB      &kp A         &kp S         &kp D            &kp F          &kp G         &kp F5           &kp F2    &kp H         &kp J        &kp K            &kp L      &kp SEMI    &kp SQT
     &kp LCTRL    &kp Z         &kp X         &kp C            &kp V          &kp B         &kp DEL          &kp F12   &kp N         &kp M        &kp COMMA        &kp DOT    &kp FSLH    &kp BSLH
-    &tog SET     &kp LGUI      &kp LALT      &mt LSHFT LANG2  &lt NUM SPACE  &mo NAV       &none            &none     &mo NAV       &lt NUM RET  &mt RSHFT LANG1  &kp LBKT   &kp RBKT    &soft_off
+    &tog SET     &kp LGUI      &kp LALT      &mt LSHFT LANG2  &lt NUM SPACE  &mo NAV       &none            &none     &mo NAV       &lt NUM RET  &mt RSHFT LANG1  &kp LBKT   &kp RBKT    &kp C_SLEEP
             >;
         };
 
@@ -71,14 +71,14 @@
 // |       |  BT0  |  BT1  |  BT2  |  BT3  |  BT4  |       |   |       |       |       |       |       |       |       |
 // |       |  USB  |  BLE  |       |       |       |       |   |       |       |       |       |       |       |       |
 // |       |       |       |       |       |BT_CLR |       |   |       |       |       |       |       |       |       |
-// |  BASE |       |       |       |       |       |       |   |       |       |       |       |       |       |  OFF  |
+// |  BASE |       |       |       |       |       |       |   |       |       |       |       |       |       | SLEEP |
 // BASE = デフォルトレイヤーに戻る (左の隠しキー)
 // BT0〜4 = 接続先 PC の切り替え, BT_CLR = 選択中の接続先のペアリング解除
             bindings = <
     &none     &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &none            &none       &none         &none       &none       &none      &none      &none
     &none     &out OUT_USB  &out OUT_BLE  &none         &none         &none         &none            &none       &none         &none       &none       &none      &none      &none
     &none     &none         &none         &none         &none         &bt BT_CLR    &none            &none       &none         &none       &none       &none      &none      &none
-    &to BASE  &none         &none         &none         &none         &none         &none            &none       &none         &none       &none       &none      &none      &soft_off
+    &to BASE  &none         &none         &none         &none         &none         &none            &none       &none         &none       &none       &none      &none      &kp C_SLEEP
             >;
         };
     };

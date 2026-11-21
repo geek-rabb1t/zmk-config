@@ -1,4 +1,10 @@
-if SHIELD_TIMOTHY_V2_LEFT
+# ---------------------------------------------------------------------------
+# PC とつながる側 (セントラル)
+#   ドングルなし版: 左手側
+#   ドングル版    : ドングル (左手側は build.yaml の cmake-args でペリフェラルにする)
+# ---------------------------------------------------------------------------
+
+if SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_DONGLE
 
 config ZMK_KEYBOARD_NAME
     default "Timothy_v2"
@@ -6,14 +12,43 @@ config ZMK_KEYBOARD_NAME
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
-endif # SHIELD_TIMOTHY_V2_LEFT
+# ペリフェラルの電池残量を取得し、PC にも通知する。
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
+    default y
 
-if SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY
+    default y
+
+endif # SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_DONGLE
+
+if SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT || SHIELD_TIMOTHY_V2_DONGLE
 
 config ZMK_SPLIT
     default y
 
-endif # SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT
+endif
+
+# ---------------------------------------------------------------------------
+# ドングル: 左右の 2 台をペリフェラルとして受ける
+# ---------------------------------------------------------------------------
+
+if SHIELD_TIMOTHY_V2_DONGLE
+
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+    default 2
+
+# ペリフェラル 2 台 + PC 用の接続先 5 つ
+config BT_MAX_CONN
+    default 7
+
+config BT_MAX_PAIRED
+    default 7
+
+endif # SHIELD_TIMOTHY_V2_DONGLE
+
+# ---------------------------------------------------------------------------
+# 左右の基板
+# ---------------------------------------------------------------------------
 
 if SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT
 
@@ -22,23 +57,4 @@ if SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT
 config NFCT_PINS_AS_GPIOS
     default y
 
-endif
-
-if SHIELD_TIMOTHY_V2_LEFT
-
-# 右手側 (ペリフェラル) の電池残量を取得し、PC にも通知する。
-config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
-    default y
-
-config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY
-    default y
-
-endif # SHIELD_TIMOTHY_V2_LEFT
-
-if SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT
-
-# 右の隠しキーに割り当てた &soft_off (キーボードの電源オフ) を使うため。
-config ZMK_PM_SOFT_OFF
-    default y
-
-endif
+endif # SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT

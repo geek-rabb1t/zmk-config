@@ -14,3 +14,4 @@ requires:
 siblings:
   - timothy_v2_left
   - timothy_v2_right
+  - timothy_v2_dongle

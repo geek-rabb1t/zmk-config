@@ -1,0 +1,24 @@
+// ドングル (Seeed XIAO nRF52840、キーなし) 用の設定。
+// 左右の基板をペリフェラルとして受け、キーマップの処理と PC との接続を担当する。
+
+#include "timothy_v2-layouts.dtsi"
+
+/ {
+    chosen {
+        zmk,physical-layout = &default_layout;
+        zmk,kscan = &mock_kscan;
+    };
+
+    // ドングル自体にはキーがないため、何も入力しないダミーの kscan を使う。
+    mock_kscan: mock_kscan_0 {
+        compatible = "zmk,kscan-mock";
+        columns = <0>;
+        rows = <0>;
+        events = <0>;
+    };
+};
+
+// ドングルには電池をつながないので、XIAO 内蔵の電池電圧測定も使わない。
+&vbatt {
+    status = "disabled";
+};
