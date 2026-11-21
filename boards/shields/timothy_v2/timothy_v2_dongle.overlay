@@ -7,6 +7,8 @@
     chosen {
         zmk,physical-layout = &default_layout;
         zmk,kscan = &mock_kscan;
+        // ボード側で設定されている XIAO 内蔵の電池測定 (vbatt) を使わないので外す。
+        /delete-property/ zmk,battery;
     };
 
     // ドングル自体にはキーがないため、何も入力しないダミーの kscan を使う。
