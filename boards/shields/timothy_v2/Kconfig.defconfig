@@ -34,3 +34,11 @@ config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY
     default y
 
 endif # SHIELD_TIMOTHY_V2_LEFT
+
+if SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_RIGHT
+
+# 右の隠しキーに割り当てた &soft_off (キーボードの電源オフ) を使うため。
+config ZMK_PM_SOFT_OFF
+    default y
+
+endif
