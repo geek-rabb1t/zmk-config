@@ -13,11 +13,12 @@ config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
 # ペリフェラルの電池残量を取得し、PC にも通知する。
+# ドングル版の左手側は cmake-args でペリフェラルにするので、セントラルのときだけ有効にする。
 config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
-    default y
+    default y if ZMK_SPLIT_ROLE_CENTRAL
 
 config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY
-    default y
+    default y if ZMK_SPLIT_ROLE_CENTRAL
 
 endif # SHIELD_TIMOTHY_V2_LEFT || SHIELD_TIMOTHY_V2_DONGLE
 
