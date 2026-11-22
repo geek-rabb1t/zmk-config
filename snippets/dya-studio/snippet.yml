@@ -1,0 +1,8 @@
+# PC とつながる側 (ドングルなし版の左手、ドングル版のドングル) 用の snippet。
+# ZMK 公式の studio-rpc-usb-uart と同じ内容に、DYA Studio の各機能を追加している。
+# (ZMK のビルド用ワークフローは snippet を 1 つしか指定できないため、まとめている)
+name: dya-studio
+append:
+  DTS_EXTRA_CPPFLAGS: -DZMK_BEHAVIORS_KEEP_ALL
+  EXTRA_DTC_OVERLAY_FILE: dya-studio.overlay
+  EXTRA_CONF_FILE: dya-studio.conf

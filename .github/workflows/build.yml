@@ -3,4 +3,7 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+    # ZMK 本体は Zephyr 4.1 ベースのフォーク (config/west.yml) を使うため、
+    # Zephyr 4.1 に対応した ZMK main のワークフローを使う。
+    # main は今後変わる可能性があるので、動作を確認したコミットに固定している。
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@4de313367288aad5aeaa1243890e40dc813f7008

@@ -4,31 +4,30 @@
 # ドングルなし版: timothy_v2_left_studio / timothy_v2_right
 # ドングル版    : timothy_v2_dongle_studio / timothy_v2_left_peripheral / timothy_v2_right
 # 右手側のファームウェアはどちらの版でも同じものを使う。
-# PC とつながる側 (ドングルなし版の左手、ドングル) は ZMK Studio 対応版だけをビルドする。
+# PC とつながる側 (ドングルなし版の左手、ドングル) は ZMK Studio / DYA Studio 対応版だけをビルドする。
+# (snippets/dya-studio に Studio と DYA Studio の設定をまとめている)
 # ペリフェラル (右手、ドングル版の左手) は Studio に対応しないので通常版のみ。
 # 版を切り替えるときは、すべての機器に settings_reset を書き込んでから入れ替えること。
 ---
 include:
   # ---- ドングルなし版 ----
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: timothy_v2_left
-    snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    snippet: dya-studio
     artifact-name: timothy_v2_left_studio
 
   # ---- 左右共通 / 両方の版で使う ----
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: timothy_v2_right
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: settings_reset
 
   # ---- ドングル版 ----
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: timothy_v2_dongle
-    snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    snippet: dya-studio
     artifact-name: timothy_v2_dongle_studio
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: timothy_v2_left
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     artifact-name: timothy_v2_left_peripheral
