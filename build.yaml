@@ -1,15 +1,15 @@
 # This file generates the GitHub Actions matrix.
 # See https://zmk.dev/docs/development/local-toolchain/build-flash for details.
 #
-# ドングルなし版: timothy_v2_left (+ studio) / timothy_v2_right
-# ドングル版    : timothy_v2_dongle (+ studio) / timothy_v2_left_peripheral / timothy_v2_right
+# ドングルなし版: timothy_v2_left_studio / timothy_v2_right
+# ドングル版    : timothy_v2_dongle_studio / timothy_v2_left_peripheral / timothy_v2_right
 # 右手側のファームウェアはどちらの版でも同じものを使う。
+# PC とつながる側 (ドングルなし版の左手、ドングル) は ZMK Studio 対応版だけをビルドする。
+# ペリフェラル (右手、ドングル版の左手) は Studio に対応しないので通常版のみ。
 # 版を切り替えるときは、すべての機器に settings_reset を書き込んでから入れ替えること。
 ---
 include:
   # ---- ドングルなし版 ----
-  - board: seeeduino_xiao_ble
-    shield: timothy_v2_left
   - board: seeeduino_xiao_ble
     shield: timothy_v2_left
     snippet: studio-rpc-usb-uart
@@ -23,8 +23,6 @@ include:
     shield: settings_reset
 
   # ---- ドングル版 ----
-  - board: seeeduino_xiao_ble
-    shield: timothy_v2_dongle
   - board: seeeduino_xiao_ble
     shield: timothy_v2_dongle
     snippet: studio-rpc-usb-uart
